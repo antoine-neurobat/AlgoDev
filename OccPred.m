@@ -14,10 +14,10 @@
 
 
 % INITIALISATION
-clearvars
+%clearvars
 % Load the OccYear matrix containing a whole year of presence on an hourly basis.
 % Data have been aggregated using PrepareOccTestData.m
-load year2001.mat 
+%load year2005.mat 
 %Allocate memory for the last 100 weeks seen.
 WeeksSeen = ones(100,7,24)*2; % 100 is arbitrary, should depend on memory available.
 WSCurrent = 1; %Current WeeksSeen
@@ -33,15 +33,15 @@ for wds = 1:7
 end
 %PredictionError is simply the cumulated difference between the actual
 %future presence and the predicted presence, one value for each future 24 hours
-PredictionError = zeros(5,24); %1st dim = 5 strategies , 2nd dim = 24 prediction times
+%PredictionError = zeros(5,24); %1st dim = 5 strategies , 2nd dim = 24 prediction times
 %PredicitionErrorDensity is the error on the average presence on 3 different
 %horizons (6, 12 and 24 hours). It maybe better indicates if a predictor is
 %likely to have a positive effect on heat control.
-PredictionErrorDensity = zeros(5, 3); %1st dim = 5 strategies , 2nd dim = 3 horizons (6, 12 and 24 hours)
+%PredictionErrorDensity = zeros(5, 3); %1st dim = 5 strategies , 2nd dim = 3 horizons (6, 12 and 24 hours)
 
 % START OF THE MAIN LOOP -- SIMULATE HOURLY EVENT
 for wn = 1:52 % for each week of OccYear matrix
-    wn
+    %wn
     for wd = 1:7 % for each weekday 
         for hh = 1:24 % for each hour 
             
@@ -50,7 +50,7 @@ for wn = 1:52 % for each week of OccYear matrix
             LastWeek(wd, hh) = OccYear(wn, wd, hh);
             
             %%%Prediction and error calculation%%%
-            if wn > 3 %predicts only after 2 weeks (1 week after start of prediction modelling)
+            if wn > 5 %predicts only after 2 weeks (1 week after start of prediction modelling)
                 for strategies = 1:5
                     tmpsum1 = zeros(3,1);
                     tmpsum2 = zeros(3,1);
@@ -105,23 +105,6 @@ for wn = 1:52 % for each week of OccYear matrix
     end
     WSCurrent = WSCurrent + 1; % Go to next WeeksSeen
 end
-
-% PRESENTATION OF RESULTS
-figure('Name','PredictionError for the 5 strategies')
-plot(PredictionError)
-%axis([1 5 0 4500])
-figure('Name','PredictionErrorDensity for the 5 strategies')
-plot(PredictionErrorDensity, ':*')
-legend('6 hours', '12 hours', '24 hours')
-%axis([1 5 0 3500])
-PredictionErrorMean = cell(5,2);
-PredictionErrorMean(:,1) = {'AverageWeek', 'BestWeek', 'Clusters', 'Schedule', 'Random'};
-PredictionErrorMean(:,2) = num2cell(mean(PredictionError,2))
-PredictionErrorDensities =  cell(6,4);
-PredictionErrorDensities(:,1) = {' ','AverageWeek', 'BestWeek', 'Clusters', 'Schedule', 'Random'};
-PredictionErrorDensities(1,:) =  {'Predictor', '6 hours', '12 hours', '24 hours'};
-PredictionErrorDensities(2:6,2:4) = num2cell(PredictionErrorDensity)
-
 
 %Original old idea:
 %Algo: per weekday
