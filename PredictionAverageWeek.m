@@ -15,7 +15,7 @@ for wds = 1:7
             end
         end
         if tmpnum ~= 0
-            PredictedWeek1(wds, hhs) = tmpsum/tmpnum;
+            PredictedWeek1(wds, hhs) = round(tmpsum/tmpnum);
         else
             PredictedWeek1(wds, hhs) = 2;
         end

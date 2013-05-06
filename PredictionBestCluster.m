@@ -9,7 +9,7 @@ function [ PredictedWeek1 ] = PredictionBestCluster(WeeksSequences, LastWeek, Cl
 %CLUSTERS INPUT DATA PREPARATION
 ClustData = zeros(size(WeeksSequences,1)-1,7*24+7);
 
-for wn = 1:size(WeeksSequences,1)-1 %-1 to not take into account current week which is incomplete
+for wn = 1:size(WeeksSequences,1)
     for wd = 1:7
         for hh = 1:24
             ClustData(wn,(wd-1)*24+hh) = WeeksSequences(wn,wd,hh); %Fill in with hourly data

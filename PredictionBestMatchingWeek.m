@@ -12,7 +12,7 @@ PredictedWeek1 = zeros(7,24);
 Similarity = zeros(size(WeeksSequences,1)-1,1);
 
 %HIGHEST SIMILARITY DETERMINATION
-for wns = 1:size(WeeksSequences,1)-1 % -1 to not take into account current week which is of zero difference of course
+for wns = 1:size(WeeksSequences,1)-1 % -1 to not take into account last week that could be used as future hours (see below)
     Similarity(wns) = WeekSimilarity(LastWeek, WeeksSequences, wns, weekday, hourofday);
 end
 [Val, BestWeekInd] = max(Similarity); % BestWeekInd is the best matching week index

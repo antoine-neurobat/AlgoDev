@@ -15,7 +15,9 @@ dv = datevec(S, 'yyyy-mm-dd HH:MM:SS');
 %-> construction of matrix 52*7*24 full year of presence/absence
 %-> construction of matrix 7*24 average week of presence/absence
 %-> construction of more than 1 week absence duration histogram
-Timeout = 3;
+Timeout = 1;
+
+OccYear=zeros(52,7,24);%added by AGU on 08.04.2013 to make it working...
 
 i = 1;
 present = 0;
